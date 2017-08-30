@@ -7,7 +7,7 @@ using evec::EuclideanVector;
 EuclideanVector::EuclideanVector(const unsigned &n) : num_dim{n} {
     // create double array and set all elements to 0.0
     mag_vec = new double[n];
-    for (auto i = 0; i < num_dim; ++i)
+    for (unsigned i = 0; i < num_dim; ++i)
         mag_vec[i] = 0.0;
 }
 
@@ -89,7 +89,7 @@ EuclideanVector::EuclideanVector(const std::initializer_list<double> &ini_list) 
     // create double array and set elements as corresponding elements in 'ini_list'
     mag_vec = new double[num_dim];
     unsigned j = 0;
-    for (auto i : ini_list) {
+    for (unsigned i : ini_list) {
         mag_vec[j] = i;
         ++j;
     }
@@ -100,7 +100,7 @@ EuclideanVector::EuclideanVector(const std::initializer_list<double> &ini_list) 
 EuclideanVector::EuclideanVector(const EuclideanVector& ev) : num_dim{ev.num_dim} {
     // copy the magnitudes in each dimension
     mag_vec = new double[num_dim];
-    for (auto i = 0; i < ev.num_dim; ++i) {
+    for (unsigned i = 0; i < ev.num_dim; ++i) {
         mag_vec[i] = ev.mag_vec[i];
     }
 }
@@ -126,7 +126,7 @@ EuclideanVector& EuclideanVector::operator=(const EuclideanVector& ev) {
     if (this != &ev) {
         num_dim = ev.num_dim;
         mag_vec = new double[num_dim];
-        for (auto i = 0; i < ev.num_dim; ++i) {
+        for (unsigned i = 0; i < ev.num_dim; ++i) {
             mag_vec[i] = ev.mag_vec[i];
         }
         // clear the cache
@@ -167,7 +167,7 @@ double EuclideanVector::getEuclideanNorm() const{
     // otherwise calculate Euclidean norm and store in cache, return cache value
     if (cache_norm == -1) {
         auto sum = 0.0;
-        for (auto i = 0; i < num_dim; ++i) {
+        for (unsigned i = 0; i < num_dim; ++i) {
             sum += pow(mag_vec[i], 2);
         }
         cache_norm = sqrt(sum);
@@ -181,7 +181,7 @@ EuclideanVector EuclideanVector::createUnitVector() const{
     EuclideanVector result(num_dim);
     auto en = getEuclideanNorm();
     // set magnitudes in each dimension as original vector's magnitudes in each dimension divided by Euclidean norm
-    for (auto i = 0; i < num_dim; ++i) {
+    for (unsigned i = 0; i < num_dim; ++i) {
         result.mag_vec[i] = mag_vec[i] / en;
     }
     return result;
@@ -208,7 +208,7 @@ EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& ev) {
     // check if vectors have same dimension
     assert(num_dim == ev.num_dim);
     // add two vectors' magnitudes in each dimension and assign to *this vector
-    for (auto i = 0; i < num_dim; ++i) {
+    for (unsigned i = 0; i < num_dim; ++i) {
         mag_vec[i] += ev.mag_vec[i];
     }
     // clear the cache
@@ -221,7 +221,7 @@ EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& ev) {
     // check if vectors have same dimension
     assert(num_dim == ev.num_dim);
     // subtract two vectors' magnitudes in each dimension and assign to *this vector
-    for (auto i = 0; i < num_dim; ++i) {
+    for (unsigned i = 0; i < num_dim; ++i) {
         mag_vec[i] -= ev.mag_vec[i];
     }
     // clear the cache
@@ -232,7 +232,7 @@ EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& ev) {
 // scalar multiplication
 EuclideanVector& EuclideanVector::operator*=(const double &d) {
     // magnitudes in each dimension times argument 'd'
-    for (auto i = 0; i < num_dim; ++i)
+    for (unsigned i = 0; i < num_dim; ++i)
         mag_vec[i] *= d;
     // clear the cache
     cache_norm = -1;
@@ -242,7 +242,7 @@ EuclideanVector& EuclideanVector::operator*=(const double &d) {
 // scalar division
 EuclideanVector& EuclideanVector::operator/=(const double &d) {
     // magnitudes in each dimension divided by argument 'd'
-    for (auto i = 0; i < num_dim; ++i) {
+    for (unsigned i = 0; i < num_dim; ++i) {
         mag_vec[i] /= d;
     }
     // clear the cache
@@ -255,7 +255,7 @@ EuclideanVector::operator std::vector<double>() const {
     // create std::list<double>
     std::vector<double> v;
     // assign magnitudes in each dimension to corresponding elements in vector
-    for (auto i = 0; i < num_dim; ++i) {
+    for (unsigned i = 0; i < num_dim; ++i) {
         v.push_back(mag_vec[i]);
     }
     return v;
@@ -266,7 +266,7 @@ EuclideanVector::operator std::list<double>() const {
     // create std::list<double>
     std::list<double> l;
     // assign magnitudes value in each dimension to corresponding elements in list
-    for (auto i = 0; i < num_dim; ++i) {
+    for (unsigned i = 0; i < num_dim; ++i) {
         l.push_back(mag_vec[i]);
     }
     return l;
@@ -278,7 +278,7 @@ bool evec::operator==(const EuclideanVector& ev1, const EuclideanVector& ev2) {
     if (ev1.num_dim != ev2.num_dim)
         return false;
     // return false if any of two vectors' magnitudes in each dimension are different
-    for (auto i = 0; i < ev1.num_dim; ++i) {
+    for (unsigned i = 0; i < ev1.num_dim; ++i) {
         if (ev1.mag_vec[i] != ev2.mag_vec[i])
             return false;
     }
@@ -298,7 +298,7 @@ EuclideanVector evec::operator+(const EuclideanVector& ev1, const EuclideanVecto
     // create a new EuclideanVector with two vectors' same dimension
     EuclideanVector result(ev1.num_dim);
     // add two vectors' magnitudes in each dimension and assign to new vector
-    for (auto i = 0; i < result.num_dim; ++i) {
+    for (unsigned i = 0; i < result.num_dim; ++i) {
         result.mag_vec[i] = ev1.mag_vec[i] + ev2.mag_vec[i];
     }
     return result;
@@ -311,7 +311,7 @@ EuclideanVector evec::operator-(const EuclideanVector& ev1, const EuclideanVecto
     // create a new EuclideanVector with two vectors' same dimension
     EuclideanVector result(ev1.num_dim);
     // subtract two vectors' magnitudes in each dimension and assign to new vector
-    for (auto i = 0; i < result.num_dim; ++i) {
+    for (unsigned i = 0; i < result.num_dim; ++i) {
         result.mag_vec[i] = ev1.mag_vec[i] - ev2.mag_vec[i];
     }
     return result;
@@ -323,7 +323,7 @@ double evec::operator*(const EuclideanVector& ev1, const EuclideanVector& ev2) {
     assert(ev1.num_dim == ev2.num_dim);
     // multiply two vectors' magnitudes in each dimension and sum them up, return the result
     double result = 0;
-    for (auto i = 0; i < ev1.num_dim; ++i) {
+    for (unsigned i = 0; i < ev1.num_dim; ++i) {
         result += ev1.mag_vec[i] * ev2.mag_vec[i];
     }
     return result;
@@ -335,7 +335,7 @@ EuclideanVector evec::operator*(const EuclideanVector& ev,const double &d_num) {
     EuclideanVector result(ev.num_dim);
     // multiply argument vector's magnitudes in each dimension by second argument value
     // and assign to new vector's magnitudes in each dimension
-    for (auto i = 0; i < result.num_dim; ++i) {
+    for (unsigned i = 0; i < result.num_dim; ++i) {
         result.mag_vec[i] = ev.mag_vec[i] * d_num;
     }
     return result;
@@ -347,7 +347,7 @@ EuclideanVector evec::operator*(const double &d_num, const EuclideanVector& ev) 
     EuclideanVector result(ev.num_dim);
     // multiply argument vector's magnitudes in each dimension by first argument value
     // and assign to new vector's magnitudes in each dimension
-    for (auto i = 0; i < result.num_dim; ++i) {
+    for (unsigned i = 0; i < result.num_dim; ++i) {
         result.mag_vec[i] = ev.mag_vec[i] * d_num;
     }
     return result;
@@ -359,7 +359,7 @@ EuclideanVector evec::operator/(const EuclideanVector &ev,const double &d_num) {
     EuclideanVector result(ev.num_dim);
     // argument vector's magnitudes in each dimension divided by second argument value
     // and assign to new vector's magnitudes in each dimension
-    for (auto i = 0; i < result.num_dim; ++i) {
+    for (unsigned i = 0; i < result.num_dim; ++i) {
         result.mag_vec[i] = ev.mag_vec[i] / d_num;
     }
     return result;
@@ -369,7 +369,7 @@ EuclideanVector evec::operator/(const EuclideanVector &ev,const double &d_num) {
 std::ostream& evec::operator<<(std::ostream &os, const EuclideanVector &ev) {
     // print out vector's magnitudes in each dimension in form like '[num1 num2 num3]'
     os << "[";
-    for (auto i = 0; i < ev.num_dim; ++i) {
+    for (unsigned i = 0; i < ev.num_dim; ++i) {
         os << ev.mag_vec[i];
         if (i != ev.num_dim - 1)
             os << " ";
