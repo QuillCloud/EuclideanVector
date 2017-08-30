@@ -1,14 +1,9 @@
-//
-// Created by Yunhe Zhang on 19/08/2017.
-//
-
 #ifndef EUCLIDEAN_VECTOR_CLASS_LIBRARY_EUCLIDEANVECTOR_H
 #define EUCLIDEAN_VECTOR_CLASS_LIBRARY_EUCLIDEANVECTOR_H
-
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <list>
+#include <algorithm>
 #include <iterator>
 #include <cmath>
 #include <initializer_list>
@@ -17,65 +12,66 @@
 namespace evec {
     class EuclideanVector {
     public:
-        //Constructors
-        EuclideanVector(const unsigned int);
+        // Constructors part
+        EuclideanVector(const unsigned &);
         EuclideanVector();
-        EuclideanVector(const unsigned int,const double);
-        EuclideanVector(std::vector<double>::iterator, std::vector<double>::iterator);
-        EuclideanVector(std::list<double>::iterator, std::list<double>::iterator);
-        EuclideanVector(std::initializer_list<double>);
+        EuclideanVector(const unsigned &,const double &);
+        EuclideanVector(const std::vector<double>::iterator &,const std::vector<double>::iterator &);
+        EuclideanVector(const std::vector<double>::const_iterator &,const std::vector<double>::const_iterator &);
+        EuclideanVector(const std::list<double>::iterator &,const std::list<double>::iterator &);
+        EuclideanVector(const std::list<double>::const_iterator &,const std::list<double>::const_iterator &);
+        EuclideanVector(const std::initializer_list<double> &);
         EuclideanVector(const EuclideanVector&);
         EuclideanVector(EuclideanVector&&);
 
-        //Destructor
+        //Destructor part
         ~EuclideanVector();
 
-        //Operations
+        //Operations part
         EuclideanVector& operator=(const EuclideanVector&);
         EuclideanVector& operator=(EuclideanVector&&);
-        unsigned int getNumDimensions() const;
-        double get(int) const;
+        unsigned getNumDimensions() const;
+        double get(const int &) const;
         double getEuclideanNorm() const;
         EuclideanVector createUnitVector() const;
-        double& operator[](int); // for setting via []
-        double operator[](int) const;
+        double& operator[](const int &);
+        double operator[](const int &) const;
         EuclideanVector& operator+=(const EuclideanVector&);
         EuclideanVector& operator-=(const EuclideanVector&);
-        EuclideanVector& operator*=(double);
-        EuclideanVector& operator/=(double);
+        EuclideanVector& operator*=(const double &);
+        EuclideanVector& operator/=(const double &);
         operator std::vector<double>() const;
         operator std::list<double>() const;
 
-        //Friends
+        // Nonmember functions
         friend bool operator==(const EuclideanVector&, const EuclideanVector&);
         friend bool operator!=(const EuclideanVector&, const EuclideanVector&);
         friend EuclideanVector operator+(const EuclideanVector&, const EuclideanVector&);
         friend EuclideanVector operator-(const EuclideanVector&, const EuclideanVector&);
         friend double operator*(const EuclideanVector&, const EuclideanVector&);
-        friend EuclideanVector operator*(const EuclideanVector&, double);
-        friend EuclideanVector operator*(double, const EuclideanVector&);
-        friend EuclideanVector operator/(const EuclideanVector&, double);
+        friend EuclideanVector operator*(const EuclideanVector&,const double &);
+        friend EuclideanVector operator*(const double &, const EuclideanVector&);
+        friend EuclideanVector operator/(const EuclideanVector&,const double &);
         friend std::ostream& operator<<(std::ostream&, const EuclideanVector&);
 
-
-
-        void changefirst();
-        void print();
-
-
     private:
-        unsigned int num_dim = 1;
-        double *mag_vec = new double[1];
+        // num_dim contains the number of dimensions
+        unsigned num_dim;
+        // mag_vec is a double array contain each dimension's magnitude
+        double *mag_vec;
+        // cache_norm cache the Euclidean norm value, set -1 as no cache.
+        mutable double cache_norm = -1;
 
     };
+    // declare nonmember functions outside of class
     bool operator==(const EuclideanVector&, const EuclideanVector&);
     bool operator!=(const EuclideanVector&, const EuclideanVector&);
     EuclideanVector operator+(const EuclideanVector&, const EuclideanVector&);
     EuclideanVector operator-(const EuclideanVector&, const EuclideanVector&);
     double operator*(const EuclideanVector&, const EuclideanVector&);
-    EuclideanVector operator*(const EuclideanVector&, double);
-    EuclideanVector operator*(double, const EuclideanVector&);
-    EuclideanVector operator/(const EuclideanVector&, double);
+    EuclideanVector operator*(const EuclideanVector&,const double &);
+    EuclideanVector operator*(const double &, const EuclideanVector&);
+    EuclideanVector operator/(const EuclideanVector&,const double &);
     std::ostream& operator<<(std::ostream&, const EuclideanVector&);
 }
 
