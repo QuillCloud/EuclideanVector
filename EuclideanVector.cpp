@@ -89,7 +89,7 @@ EuclideanVector::EuclideanVector(const std::initializer_list<double> &ini_list) 
     // create double array and set elements as corresponding elements in 'ini_list'
     mag_vec = new double[num_dim];
     unsigned j = 0;
-    for (unsigned i : ini_list) {
+    for (auto i : ini_list) {
         mag_vec[j] = i;
         ++j;
     }
@@ -156,8 +156,9 @@ unsigned EuclideanVector::getNumDimensions() const {
 }
 
 // returns the value of the magnitude in a given dimension
-double EuclideanVector::get(const int &index) const {
-    assert((index >= 0) && (index < num_dim));
+double EuclideanVector::get(const unsigned &index) const {
+    // check if index out of range
+    assert(index < num_dim);
     return mag_vec[index];
 }
 
@@ -188,7 +189,7 @@ EuclideanVector EuclideanVector::createUnitVector() const{
 }
 
 // set the value in a given dimension
-double& EuclideanVector::operator[](const int &index) {
+double& EuclideanVector::operator[](const unsigned &index) {
     // check if index out of range
     assert((index >= 0) && (index < num_dim));
     // clear the cache
@@ -197,7 +198,7 @@ double& EuclideanVector::operator[](const int &index) {
 }
 
 // get the value in a given dimension
-double EuclideanVector::operator[](const int &index) const {
+double EuclideanVector::operator[](const unsigned &index) const {
     // check if index out of range
     assert((index >= 0) && (index < num_dim));
     return mag_vec[index];

@@ -31,11 +31,11 @@ namespace evec {
         EuclideanVector& operator=(const EuclideanVector&);
         EuclideanVector& operator=(EuclideanVector&&);
         unsigned getNumDimensions() const;
-        double get(const int &) const;
+        double get(const unsigned &) const;
         double getEuclideanNorm() const;
         EuclideanVector createUnitVector() const;
-        double& operator[](const int &);
-        double operator[](const int &) const;
+        double& operator[](const unsigned &);
+        double operator[](const unsigned &) const;
         EuclideanVector& operator+=(const EuclideanVector&);
         EuclideanVector& operator-=(const EuclideanVector&);
         EuclideanVector& operator*=(const double &);
