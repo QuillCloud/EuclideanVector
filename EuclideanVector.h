@@ -36,23 +36,23 @@ namespace evec {
         EuclideanVector createUnitVector() const;
         double& operator[](const unsigned &);
         double operator[](const unsigned &) const;
-        EuclideanVector& operator+=(const EuclideanVector&);
-        EuclideanVector& operator-=(const EuclideanVector&);
+        EuclideanVector& operator+=(const EuclideanVector &);
+        EuclideanVector& operator-=(const EuclideanVector &);
         EuclideanVector& operator*=(const double &);
         EuclideanVector& operator/=(const double &);
         operator std::vector<double>() const;
         operator std::list<double>() const;
 
         // Nonmember functions
-        friend bool operator==(const EuclideanVector&, const EuclideanVector&);
-        friend bool operator!=(const EuclideanVector&, const EuclideanVector&);
-        friend EuclideanVector operator+(const EuclideanVector&, const EuclideanVector&);
-        friend EuclideanVector operator-(const EuclideanVector&, const EuclideanVector&);
-        friend double operator*(const EuclideanVector&, const EuclideanVector&);
+        friend bool operator==(const EuclideanVector &, const EuclideanVector &);
+        friend bool operator!=(const EuclideanVector &, const EuclideanVector &);
+        friend EuclideanVector operator+(const EuclideanVector&, const EuclideanVector &);
+        friend EuclideanVector operator-(const EuclideanVector&, const EuclideanVector &);
+        friend double operator*(const EuclideanVector &, const EuclideanVector &);
         friend EuclideanVector operator*(const EuclideanVector&,const double &);
-        friend EuclideanVector operator*(const double &, const EuclideanVector&);
+        friend EuclideanVector operator*(const double &, const EuclideanVector &);
         friend EuclideanVector operator/(const EuclideanVector&,const double &);
-        friend std::ostream& operator<<(std::ostream&, const EuclideanVector&);
+        friend std::ostream& operator<<(std::ostream &, const EuclideanVector &);
 
     private:
         // num_dim contains the number of dimensions
@@ -61,18 +61,17 @@ namespace evec {
         double *mag_vec;
         // cache_norm cache the Euclidean norm value, set -1 as no cache.
         mutable double cache_norm = -1;
-
     };
     // declare nonmember functions outside of class
-    bool operator==(const EuclideanVector&, const EuclideanVector&);
-    bool operator!=(const EuclideanVector&, const EuclideanVector&);
-    EuclideanVector operator+(const EuclideanVector&, const EuclideanVector&);
-    EuclideanVector operator-(const EuclideanVector&, const EuclideanVector&);
-    double operator*(const EuclideanVector&, const EuclideanVector&);
-    EuclideanVector operator*(const EuclideanVector&,const double &);
-    EuclideanVector operator*(const double &, const EuclideanVector&);
-    EuclideanVector operator/(const EuclideanVector&,const double &);
-    std::ostream& operator<<(std::ostream&, const EuclideanVector&);
+    bool operator==(const EuclideanVector &, const EuclideanVector &);
+    bool operator!=(const EuclideanVector &, const EuclideanVector &);
+    EuclideanVector operator+(const EuclideanVector&, const EuclideanVector &);
+    EuclideanVector operator-(const EuclideanVector&, const EuclideanVector &);
+    double operator*(const EuclideanVector &, const EuclideanVector &);
+    EuclideanVector operator*(const EuclideanVector &,const double &);
+    EuclideanVector operator*(const double &, const EuclideanVector &);
+    EuclideanVector operator/(const EuclideanVector &,const double &);
+    std::ostream& operator<<(std::ostream &, const EuclideanVector &);
 }
 
 #endif //EUCLIDEAN_VECTOR_CLASS_LIBRARY_EUCLIDEANVECTOR_H
