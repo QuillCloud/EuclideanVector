@@ -7,8 +7,7 @@ using evec::EuclideanVector;
 EuclideanVector::EuclideanVector(const unsigned &n) : num_dim{n} {
     // create double array and set all elements to 0.0
     mag_vec = new double[n];
-    for (unsigned i = 0; i < num_dim; ++i)
-        mag_vec[i] = 0.0;
+    std::fill_n(mag_vec, n, 0.0);
 }
 
 // default constructor, set dimension as 1 and magnitude as 0.0
@@ -287,11 +286,10 @@ bool evec::operator!=(const EuclideanVector &ev1, const EuclideanVector &ev2) {
 EuclideanVector evec::operator+(const EuclideanVector &ev1, const EuclideanVector &ev2) {
     // check if two vectors have same dimension
     assert(ev1.num_dim == ev2.num_dim);
-    // create a new EuclideanVector with two vectors' same dimension
-    EuclideanVector result(ev1.num_dim);
-    // add two vectors' magnitudes in each dimension and assign to new vector
-    for (unsigned i = 0; i < result.num_dim; ++i)
-        result.mag_vec[i] = ev1.mag_vec[i] + ev2.mag_vec[i];
+    // use copy constructor to get copy of first argument vector
+    EuclideanVector result(ev1);
+    // call 'operator+=' to get result
+    result += ev2;
     return result;
 }
 
@@ -299,11 +297,10 @@ EuclideanVector evec::operator+(const EuclideanVector &ev1, const EuclideanVecto
 EuclideanVector evec::operator-(const EuclideanVector &ev1, const EuclideanVector &ev2) {
     // check if two vectors have same dimension
     assert(ev1.num_dim == ev2.num_dim);
-    // create a new EuclideanVector with two vectors' same dimension
-    EuclideanVector result(ev1.num_dim);
-    // subtract two vectors' magnitudes in each dimension and assign to new vector
-    for (unsigned i = 0; i < result.num_dim; ++i)
-        result.mag_vec[i] = ev1.mag_vec[i] - ev2.mag_vec[i];
+    // use copy constructor to get copy of first argument vector
+    EuclideanVector result(ev1);
+    // call 'operator-=' to get result
+    result -= ev2;
     return result;
 }
 
@@ -311,8 +308,8 @@ EuclideanVector evec::operator-(const EuclideanVector &ev1, const EuclideanVecto
 double evec::operator*(const EuclideanVector &ev1, const EuclideanVector &ev2) {
     // check if two vectors have same dimension
     assert(ev1.num_dim == ev2.num_dim);
-    // multiply two vectors' magnitudes in each dimension and sum them up, return the result
     double result = 0;
+    // multiply two vectors' magnitudes in each dimension and sum them up, return the result
     for (unsigned i = 0; i < ev1.num_dim; ++i)
         result += ev1.mag_vec[i] * ev2.mag_vec[i];
     return result;
@@ -320,34 +317,24 @@ double evec::operator*(const EuclideanVector &ev1, const EuclideanVector &ev2) {
 
 // overload of operator '*' for scalar multiplication, the vector is at left side
 EuclideanVector evec::operator*(const EuclideanVector &ev,const double &d_num) {
-    // create a new EuclideanVector with same dimension of argument vector
-    EuclideanVector result(ev.num_dim);
-    // multiply argument vector's magnitudes in each dimension by second argument value
-    // and assign to new vector's magnitudes in each dimension
-    for (unsigned i = 0; i < result.num_dim; ++i)
-        result.mag_vec[i] = ev.mag_vec[i] * d_num;
+    // use copy constructor to get copy of argument vector
+    EuclideanVector result(ev);
+    // call 'operator*=' to get result
+    result *= d_num;
     return result;
 }
 
 // overload of operator '*' for scalar multiplication, the vector is at right side
 EuclideanVector evec::operator*(const double &d_num, const EuclideanVector &ev) {
-    // create a new EuclideanVector with same dimension of argument vector
-    EuclideanVector result(ev.num_dim);
-    // multiply argument vector's magnitudes in each dimension by first argument value
-    // and assign to new vector's magnitudes in each dimension
-    for (unsigned i = 0; i < result.num_dim; ++i)
-        result.mag_vec[i] = ev.mag_vec[i] * d_num;
-    return result;
+    return ev * d_num;
 }
 
 // overload of operator '/' for scalar division
 EuclideanVector evec::operator/(const EuclideanVector &ev,const double &d_num) {
-    // create a new EuclideanVector with same dimension of argument vector
-    EuclideanVector result(ev.num_dim);
-    // argument vector's magnitudes in each dimension divided by second argument value
-    // and assign to new vector's magnitudes in each dimension
-    for (unsigned i = 0; i < result.num_dim; ++i)
-        result.mag_vec[i] = ev.mag_vec[i] / d_num;
+    // use copy constructor to get copy of argument vector
+    EuclideanVector result(ev);
+    // use scalar division to get result vector and return it
+    result /= d_num;
     return result;
 }
 
